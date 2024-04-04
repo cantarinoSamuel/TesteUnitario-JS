@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resultados dos Testes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    .result {
+      margin-bottom: 10px;
+    }
+    .pass {
+      color: green;
+    }
+    .fail {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Resultados dos Testes</h1>
+  <div id="jasmine-result"></div>
+
+  <!-- Incluir Jasmine -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.8.0/jasmine.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.8.0/jasmine.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.8.0/jasmine-html.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.8.0/boot.min.js"></script>
+
+  <!-- Seu script de testes -->
+  <script src="testes.js"></script>
+  <script>
+    // Função para exibir os resultados na página
+    function displayResults(results) {
+      var resultElement = document.getElementById('jasmine-result');
+
+      results.forEach(function(item) {
+        var testResult = item.result === 'Passou' ? 'passou' : 'falhou';
+        var testClass = item.result === 'Passou' ? 'pass' : 'fail';
+
+        var testDiv = document.createElement('div');
+        testDiv.classList.add('result', testClass);
+        testDiv.innerHTML = `<strong>${item.test}:</strong> ${item.result}`;
+        resultElement.appendChild(testDiv);
+      });
+    }
+
+    // Executar os testes e exibir resultados
+    var results = [];
+    try {
+      runTests();
+      results.push({ test: 'Todos os testes', result: 'Passou' });
+    } catch (error) {
+      results.push({ test: 'Todos os testes', result: 'Falhou' });
+    }
+    
+    displayResults(results);
+  </script>
+</body>
+</html>
